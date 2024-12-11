@@ -1,0 +1,24 @@
+<nav class="bg-primary p-4 shadow-md">
+  <ul class="flex items-center justify-start space-x-6">
+    <ng-container *ngIf="!(isLoggedIn$ | async)">
+      <li>
+        <a routerLink="login" class="text-white font-medium hover:text-secondary transition-colors duration-200">Login</a>
+      </li>
+      <li>
+        <a routerLink="signup" class="text-white font-medium hover:text-secondary transition-colors duration-200">Sign Up</a>
+      </li>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn$ | async">
+      <li>
+        <a routerLink="discussion" class="text-white font-medium hover:text-secondary transition-colors duration-200">Discussion</a>
+      </li>
+      <li>
+        <a routerLink="profile" class="text-white font-medium hover:text-secondary transition-colors duration-200">User Profile</a>
+      </li>
+      <li>
+        <button (click)="logout()" class="text-white font-medium hover:text-secondary transition-colors duration-200">Logout</button>
+      </li>
+    </ng-container>
+  </ul>
+</nav>

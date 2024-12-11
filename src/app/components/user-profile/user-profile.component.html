@@ -1,0 +1,90 @@
+<div class="min-h-screen bg-background p-6">
+  <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-semibold text-text">User Profile</h2>
+    </div>
+
+    <div *ngIf="isLoading" class="flex justify-center py-4">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+    </div>
+
+    <div class="profile-content" *ngIf="user && !isLoading">
+      <div *ngIf="!isEditing" class="space-y-4">
+        <div class="info-row">
+          <label class="block text-text font-medium">Name:</label>
+          <span class="text-secondary">{{ user.name }}</span>
+        </div>
+        <div class="info-row">
+          <label class="block text-text font-medium">Email:</label>
+          <span class="text-secondary">{{ user.email }}</span>
+        </div>
+        <button
+          (click)="toggleEdit()"
+          class="bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+        >
+          Edit Profile
+        </button>
+      </div>
+
+      <form
+        *ngIf="isEditing"
+        [formGroup]="profileForm"
+        (ngSubmit)="onSubmit()"
+        class="space-y-6"
+      >
+        <div class="form-group">
+          <label for="name" class="block text-text font-medium">Name</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+          />
+          <div
+            *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched"
+            class="text-accent mt-1 text-sm"
+          >
+            Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="block text-text font-medium">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+          />
+          <div
+            *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+            class="text-accent mt-1 text-sm"
+          >
+            Please enter a valid email
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-4">
+          <button
+            type="submit"
+            [disabled]="profileForm.invalid || isLoading"
+            class="bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {{ isLoading ? 'Saving...' : 'Save' }}
+          </button>
+          <button
+            type="button"
+            (click)="toggleEdit()"
+            class="bg-secondary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+
+      <div *ngIf="error" class="mt-4 p-4 bg-red-100 text-accent rounded-md">
+        {{ error }}
+      </div>
+    </div>
+  </div>
+</div>

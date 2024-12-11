@@ -1,0 +1,49 @@
+<div class="flex min-h-screen items-center justify-center bg-background px-4">
+  <div class="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
+    <h2 class="mb-6 text-center text-2xl font-bold text-primary">Login</h2>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div class="space-y-2">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email"
+          class="w-full rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          [ngClass]="{'border-red-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
+        <div class="text-sm text-red-500" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          Please enter a valid email
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input 
+          id="password" 
+          type="password" 
+          formControlName="password"
+          class="w-full rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          [ngClass]="{'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+        <div class="text-sm text-red-500" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          Password must be at least 6 characters
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        [disabled]="loginForm.invalid || isSubmitting"
+        class="w-full rounded-md bg-primary px-4 py-2 text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50">
+        {{ isSubmitting ? 'Logging in...' : 'Login' }}
+      </button>
+
+      <div class="text-center text-red-500" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <div class="text-center text-sm text-gray-600">
+        Need an account? 
+        <a routerLink="/signup" class="text-primary hover:text-primary-dark">Sign up</a>
+      </div>
+    </form>
+  </div>
+</div>

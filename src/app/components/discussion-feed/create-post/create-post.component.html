@@ -1,0 +1,48 @@
+<div class="min-h-screen p-6">
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-text mb-6">Create New Post</h2>
+    
+    <div class="mb-6">
+      <label for="title" class="block text-text font-medium mb-2">Title</label>
+      <input 
+        id="title" 
+        formControlName="title" 
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+      />
+      <div 
+        *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched"
+        class="mt-2 text-accent text-sm"
+      >
+        Title is required.
+      </div>
+    </div>
+    
+    <div class="mb-6">
+      <label for="content" class="block text-text font-medium mb-2">Content</label>
+      <textarea 
+        id="content" 
+        formControlName="content"
+        rows="6"
+        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+      ></textarea>
+      <div 
+        *ngIf="postForm.get('content')?.invalid && postForm.get('content')?.touched"
+        class="mt-2 text-accent text-sm"
+      >
+        Content is required.
+      </div>
+    </div>
+    
+    <button 
+      type="submit" 
+      [disabled]="postForm.invalid"
+      class="w-full bg-primary text-white py-3 px-6 rounded-md hover:bg-opacity-90 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-200"
+    >
+      Create Post
+    </button>
+    
+    <div *ngIf="error" class="mt-4 p-4 bg-red-100 text-accent rounded">
+      {{ error }}
+    </div>
+  </form>
+</div>

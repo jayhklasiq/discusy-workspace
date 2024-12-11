@@ -1,0 +1,83 @@
+<div class="min-h-screen bg-background p-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="lg:flex lg:space-x-8">
+      <!-- Posts Section -->
+      <div class="lg:w-2/3">
+        <h2 class="text-3xl font-bold mb-6 text-text">Discussion Feed</h2>
+        
+        <div *ngIf="posts.length > 0; else noPosts" class="space-y-6">
+          <div
+            *ngFor="let post of posts"
+            class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
+          >
+            <div class="p-6">
+              <div class="flex justify-between items-start">
+                <div class="space-y-3">
+                  <h3 class="text-xl font-semibold text-secondary">
+                    {{ post.title }}
+                  </h3>
+                  <p class="text-text/80">{{ post.content }}</p>
+                  <a
+                    [routerLink]="['/post', post._id]"
+                    class="inline-block text-primary hover:text-primary/80 font-medium transition-colors duration-200"
+                  >
+                    Read more →
+                  </a>
+                </div>
+                <button
+                  (click)="confirmDelete(post._id!)"
+                  class="text-accent hover:text-accent/80 px-3 py-1 rounded-md transition-colors duration-200"
+                >
+                  Delete
+                </button>
+              </div>
+
+              <!-- Delete Confirmation -->
+              <div
+                *ngIf="postToDelete === post._id"
+                class="mt-4 p-4 bg-accent/5 rounded-md border border-accent/20"
+              >
+                <p class="text-accent font-medium mb-3">
+                  Are you sure you want to delete this post?
+                </p>
+                <div class="flex space-x-3">
+                  <button
+                    (click)="deletePost(post._id)"
+                    class="bg-accent text-white px-4 py-2 rounded-md hover:bg-accent/90 transition-colors duration-200"
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    (click)="cancelDelete()"
+                    class="bg-background text-text px-4 py-2 rounded-md hover:bg-background/90 border border-text/20 transition-colors duration-200"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <p *ngIf="deleteError" class="mt-2 text-accent text-sm">
+                  {{ deleteError }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noPosts>
+          <div class="text-text/60 text-center py-8">No posts available.</div>
+        </ng-template>
+
+        <a
+          routerLink="create"
+          class="mt-6 inline-flex items-center bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition-colors duration-200 font-medium"
+        >
+          Create New Post
+        </a>
+      </div>
+
+      <!-- Router Outlet Section -->
+      <div class="lg:w-1/3 mt-8 lg:mt-0">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
