@@ -613,6 +613,10 @@ video {
   margin-bottom: 0.75rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -811,6 +815,10 @@ video {
 .bg-accent {
   --tw-bg-opacity: 1;
   background-color: rgb(106 16 64 / var(--tw-bg-opacity, 1));
+}
+
+.bg-accent\/10 {
+  background-color: rgb(106 16 64 / 0.1);
 }
 
 .bg-accent\/5 {
